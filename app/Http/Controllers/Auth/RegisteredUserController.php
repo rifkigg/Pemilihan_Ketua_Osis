@@ -31,11 +31,13 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'role' => ['required', 'string', 'max:5'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
 
@@ -43,6 +45,13 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        if($request->user()->role === 'admin')
+        {
+            return redirect('admin/dashboard');
+        }else {
+            return redirect(route('dashboard'));
+        }
+
+        return redirect(route('dashboard'));
     }
 }
