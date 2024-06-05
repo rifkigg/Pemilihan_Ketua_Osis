@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('password');
             $table->string('role')->default('siswa');
-
+            $table->integer('nisn')->unique();
+            $table->enum('status', ['Belum Voting','Sudah Voting'])->default('Belum Voting');
             $table->rememberToken();
             $table->timestamps();
         });
