@@ -1,47 +1,108 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{{ asset('css/styleLogin.css') }}" />
+    <title>Boostrap Login</title>
+  </head>
+  <body>
+    <div
+      class="container d-flex justify-content-center align-items-center min-vh-100"
+    >
+      <div class="row border rounded-5 p-3 bg-white shadow box-area">
+        <div
+          class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
+          style="background: #353636"
+        >
+          <div class="featured-image mb-3">
+            <img
+              src="{{ asset('image/Poster Suara Demokrasi Ilustratif Biru dan Oranye.png') }}"
+              class="img-fluid max-width: 100%;"
+              width="1000"
+            />
+          </div>
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <div class="col-md-6 right-box">
+          <div class="row align-items-center">
+            <div class="header-text mb-4">
+              <h1>
+                PILKETOS
+                <img src="images/pngwing.com (2).png" alt="" width="40" />
+              </h1>
+              <p>
+                <b
+                  >" Mari Sukseskan Pemilihan Ketua OSIS dengan Pilihan yang
+                  Bijak "</b
+                >
+              </p>
+            </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            {{-- Form Login --}}
+            <x-auth-session-status class="mb-4" :status="session('status')" />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <form method="POST" action="{{ route('login') }}">
+              @csrf
+
+                {{-- Name --}}
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control form-control-lg bg-light fs-6"
+                  placeholder="Nama"
+                  id="name" 
+                  type="text" 
+                  name="name" 
+                  :value="old('name')" 
+                  required autofocus autocomplete="username"
+                />
+                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+              </div>
+
+              <div class="input-group mb-1">
+                <input
+                  type="password"
+                  class="form-control form-control-lg bg-light fs-6"
+                  placeholder="Password"
+                  id="password"
+                  type="password"
+                  name="password"
+                  required autocomplete="current-password" 
+                />
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+              </div>
+
+                <div class="form-check mt-3">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="remember_me" 
+                    type="checkbox"
+                    name="remember"
+                  />
+                  <label for="remember_me" class="form-check-label text-secondary"
+                    ><small>{{ __('Ingatkan Saya') }}</small></label
+                  >
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <button type="submit" class="btn btn-lg btn-primary w-100 fs-6 mt-4">{{ __('Log in') }}</button>
+              </div>
+              <div class="row">
+                <small>Ada kendala ? <a href="https://wa.me/qr/53YQBXCBXAIGL1">Hubungi Admin</a></small>
+              </div>
+            </form>
+          </div>
         </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+      </div>
+    </div>
+  </body>
+</html>

@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'role',
         'nisn',
+        'jenis_kelamin',
         'status',
         'password',
     ];

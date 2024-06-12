@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('admin.insert') }}">
         @csrf
 
         <!-- Name -->
@@ -26,7 +26,7 @@
         {{-- Status --}}
         <div>
             <x-input-label for="status" :value="__('status')" />
-            <select name="status" id="status">
+            <select name="status" id="status" class="form-select">
                 <option value="Sudah Voting">Sudah Voting</option>
                 <option value="Belum Voting">Belum Voting</option>
             </select>
@@ -66,14 +66,7 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
+        <button type="submit" class="btn btn-md btn-primary me-3">SAVE</button>
+        <button type="reset" class="btn btn-md btn-warning">RESET</button>
     </form>
 </x-guest-layout>

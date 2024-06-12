@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard - E-Voting</title>
+    <title>Pengguna - E-Voting</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('/assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -23,9 +23,8 @@
     {{-- Data Tables --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    {{-- @livewireStyles --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 </head>
 
 
@@ -48,8 +47,8 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+             <!-- Nav Item - Dashboard -->
+             <li class="nav-item active">
                 <a class="nav-link" href="dashboard">
                     <svg xmlns="http://www.w3.org/2000/svg" height="15" width="15" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm320 96c0-26.9-16.5-49.9-40-59.3V88c0-13.3-10.7-24-24-24s-24 10.7-24 24V292.7c-23.5 9.5-40 32.5-40 59.3c0 35.3 28.7 64 64 64s64-28.7 64-64zM144 176a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm-16 80a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm288 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64zM400 144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg>
                     <span>Dashboard</span></a>
@@ -251,7 +250,6 @@
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -289,13 +287,60 @@
                 </nav>
                 <!-- End of Topbar -->
 
-                {{-- Start Main --}}
-                <h1 class="text-center mb-5">Grafik Hasil Pemilihan Ketua Osis</h1>
-                <div class="chart card m-auto" style="width: 700px">
-                    <canvas id="myChart" width="400" height="200"></canvas>
-                </div>
-                
-                {{-- End Main --}}
+                    {{-- Main --}}
+                    <div class="container my-auto bg-white p-3">
+                        <a class="btn btn-primary" href="{{ route('admin.insert') }}">Tambah Pengguna</a>
+
+                      <table id="example" class="table table-striped text-start" style="width:100%">
+                        <thead class=" text-start">
+                            <tr>
+                                <th>Name</th>
+                                <th>Nisn/NIP</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($users as $user)
+                            <tr>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->nisn }}</td>
+                                <td>{{ $user->jenis_kelamin }}</td>
+                                <td>{{ $user->role }}</td>
+                                <td>{{ $user->status }}</td>
+                                <td>
+                                    <div class="button d-flex gap-3">
+                                        <a href="{{ route('users.edit', ['id' => $user->id]) }}" class="btn btn-warning">Edit</a>
+                                        {{-- <a href="{{ route('users.destroy', ['id' => $user->id]) }}" class="btn btn-danger">Hapus</a> --}}
+                                        <form action="{{ route('users.destroy', ['id' => $user->id]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"  class="btn btn-danger">Hapus</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
+                                <div class="alert alert-danger">
+                                    Data Pengguna belum Tersedia.
+                                </div>
+                            @endforelse
+                        </tbody>
+                        <tfoot class=" text-start">
+                            <tr>
+                                <th>Name</th>
+                                <th>Nisn/NIP</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    </div>
+                    {{-- End Main --}}
                     
 
            
@@ -365,35 +410,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {!! json_encode($labels) !!},
-                datasets: [{
-                    label: 'Total Voting',
-                    data: {!! json_encode($datas) !!},
-                    backgroundColor: [
-                        'blue',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+      new DataTable('#example');
     </script>
-    {{-- @livewireScripts --}}
+
+
+
+
 </body>
 
 </html>

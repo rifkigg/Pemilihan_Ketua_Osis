@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('password');
             $table->string('role')->default('siswa');
-            $table->integer('nisn')->unique();
+            $table->integer('nisn');
             $table->enum('status', ['Belum Voting','Sudah Voting'])->default('Belum Voting');
+            $table->enum('jenis_kelamin', ['Laki - Laki','Perempuan']);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('ketos', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('image');
             $table->text('visi');
             $table->text('misi');
             $table->integer('no');
+            $table->tinyInteger('vote')->default(0);
+            $table->string('slogan');
+            $table->string('kelas');
             $table->timestamps();
         });
     }
